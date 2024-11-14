@@ -31,8 +31,13 @@ public class Voiture {
 	 */
 	public void entreAuGarage(Garage g) throws IllegalStateException {
 		// Et si la voiture est déjà dans un garage ?
+		if (myStationnements.isEmpty()) {
 			Stationnement s = new Stationnement(this, g);
 			myStationnements.add(s);
+		}else{
+			throw new IllegalStateException();
+		}
+
 
 	}
 
@@ -48,9 +53,12 @@ public class Voiture {
 		// Terminer ce stationnement
 		//throws NoSuchElementException
 
-
-		Stationnement actuel = myStationnements.getLast();
-		actuel.terminer();
+		if (!myStationnements.getLast().estEnCours()) {
+			throw new IllegalStateException();
+		}else{
+			Stationnement actuel = myStationnements.getLast();
+			actuel.terminer();
+		}
 
 		//throw new UnsupportedOperationException("Pas encore implémenté");
 	}
